@@ -1103,10 +1103,7 @@
   </div>
 </div>
 
- 
 <script>
-
-
   // ── MOBILE NAV ──
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
@@ -1386,55 +1383,6 @@ INSTRUCTIONS FOR RESPONDING:
     if (el) el.remove();
   }
 
-  // ── API CONFIGURATION ──────────────────────────────────────────────────────
-  // The Anthropic API cannot be called directly from a browser (CORS restriction).
-  // You need a lightweight proxy. Two easy options:
-  //
-  // OPTION A — Cloudflare Worker (free, recommended):
-  //   1. Go to https://workers.cloudflare.com and create a free account.
-  //   2. Create a new Worker and paste the code from the "worker.js" comment below.
-  //   3. Set your Anthropic API key as a Worker secret named ANTHROPIC_API_KEY.
-  //   4. Replace PROXY_URL below with your Worker URL (e.g. https://bht-chat.yourname.workers.dev).
-  //
-  // OPTION B — Any backend proxy you already control:
-  //   Point PROXY_URL at any endpoint that forwards POST requests to api.anthropic.com/v1/messages
-  //   with your API key in the Authorization header and returns the response.
-  //
-  // worker.js (paste this into your Cloudflare Worker):
-  // ─────────────────────────────────────────────────────
-  // export default {
-  //   async fetch(request, env) {
-  //     if (request.method === 'OPTIONS') {
-  //       return new Response(null, { headers: {
-  //         'Access-Control-Allow-Origin': '*',
-  //         'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  //         'Access-Control-Allow-Headers': 'Content-Type',
-  //       }});
-  //     }
-  //     const body = await request.text();
-  //     const resp = await fetch('https://api.anthropic.com/v1/messages', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'x-api-key': env.ANTHROPIC_API_KEY,
-  //         'anthropic-version': '2023-06-01',
-  //       },
-  //       body,
-  //     });
-  //     const data = await resp.text();
-  //     return new Response(data, {
-  //       status: resp.status,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Access-Control-Allow-Origin': '*',
-  //       },
-  //     });
-  //   }
-  // };
-  // ─────────────────────────────────────────────────────
-
-  const PROXY_URL = 'https://bhb.michaelbonzo77.workers.dev'; // ← Replace with your Cloudflare Worker URL
-
   async function sendMessage(userText) {
     if (!userText.trim()) return;
     quickReplies.style.display = 'none';
@@ -1445,14 +1393,8 @@ INSTRUCTIONS FOR RESPONDING:
     chatHistory.push({ role: 'user', content: userText });
     addTypingIndicator();
 
-    if (!PROXY_URL || PROXY_URL === 'YOUR_PROXY_URL_HERE') {
-      removeTypingIndicator();
-      addBotMessage("The chat assistant isn't configured yet. Please contact us at <a href='mailto:info@bluehummingbirdtrust.com'>info@bluehummingbirdtrust.com</a> — we'd love to hear from you!");
-      return;
-    }
-
     try {
-      const response = await fetch(PROXY_URL, {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1466,13 +1408,6 @@ INSTRUCTIONS FOR RESPONDING:
       const data = await response.json();
       removeTypingIndicator();
 
-      if (data.error) {
-        console.error('API error:', data.error);
-        addBotMessage("I'm having a brief issue. Please try again or email us at <a href='mailto:info@bluehummingbirdtrust.com'>info@bluehummingbirdtrust.com</a>.");
-        chatHistory.pop();
-        return;
-      }
-
       const reply = data.content && data.content[0] && data.content[0].text
         ? data.content[0].text
         : "I'm having trouble connecting right now. Please email us at info@bluehummingbirdtrust.com or reach out on WhatsApp.";
@@ -1481,9 +1416,7 @@ INSTRUCTIONS FOR RESPONDING:
       addBotMessage(reply);
     } catch (err) {
       removeTypingIndicator();
-      console.error('Chat error:', err);
       addBotMessage("I'm having trouble connecting right now. Please email us at <a href='mailto:info@bluehummingbirdtrust.com'>info@bluehummingbirdtrust.com</a> or chat with us on WhatsApp.");
-      chatHistory.pop();
     }
   }
 
