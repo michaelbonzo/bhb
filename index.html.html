@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blue Hummingbird Trust</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0e2040;
+    --navy-light: #163057;
+    --blue: #1a4a8a;
+    --blue-accent: #1d6ecf;
+    --blue-bright: #2980e8;
+    --gold: #c8a847;
+    --gold-light: #e8c96a;
+    --white: #ffffff;
+    --off-white: #f0f4f9;
+    --text-light: #b8cce4;
+    --text-muted: #7a9bbf;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 72px;
+    background: rgba(10, 22, 40, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo svg { width: 36px; height: 36px; }
+  .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; color: var(--white); letter-spacing: 0.3px; }
+  .nav-logo-text span { display: block; font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 400; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
+  .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+  .nav-links a { color: var(--text-light); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.3px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--blue-accent); color: var(--white) !important;
+    padding: 9px 22px; border-radius: 4px; font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--blue-bright) !important; color: var(--white) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 40%, #0d2d5a 100%);
+    z-index: 0;
+  }
+  .hero-image {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 52%;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .hero-image img {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.35;
+    filter: saturate(0.7) brightness(0.9);
+  }
+  .hero-image::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, var(--navy) 0%, transparent 50%);
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 580px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 28px;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 700; line-height: 1.12;
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 em { color: var(--gold-light); font-style: normal; }
+  .hero-sub {
+    font-size: 17px; color: var(--text-light); line-height: 1.75;
+    margin-bottom: 44px; max-width: 480px;
+  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--blue-accent); color: var(--white);
+    padding: 14px 30px; border-radius: 4px;
+    font-size: 14px; font-weight: 600; letter-spacing: 0.3px;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--blue-bright); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.25); color: var(--white);
+    padding: 14px 30px; border-radius: 4px;
+    font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 56px;
+    padding-top: 40px; border-top: 1px solid var(--border);
+  }
+  .stat-item {}
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; color: var(--gold-light); }
+  .stat-label { font-size: 12px; color: var(--text-muted); letter-spacing: 0.5px; margin-top: 2px; }
+
+  /* ── SECTIONS ── */
+  section { padding: 96px 5%; }
+  .section-tag {
+    font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px; display: block;
+  }
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700; line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  .section-lead {
+    font-size: 17px; color: var(--text-light); line-height: 1.75;
+    max-width: 640px;
+  }
+
+  /* ── ABOUT ── */
+  .about { background: var(--navy-mid); }
+  .about-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .about-image-wrap { position: relative; }
+  .about-image-wrap img {
+    width: 100%; border-radius: 4px;
+    object-fit: cover; height: 480px;
+    filter: brightness(0.85) saturate(0.8);
+  }
+  .about-badge {
+    position: absolute; bottom: -20px; left: -20px;
+    background: var(--blue-accent); border-radius: 4px;
+    padding: 20px 24px;
+  }
+  .about-badge-num { font-family: 'Playfair Display', serif; font-size: 34px; font-weight: 700; }
+  .about-badge-label { font-size: 11px; color: rgba(255,255,255,0.7); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+  .about-text h2 { margin-bottom: 20px; }
+  .about-text p { color: var(--text-light); margin-bottom: 20px; }
+  .about-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 32px 0; }
+  .pillar {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 500; color: var(--text-light);
+  }
+  .pillar-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+  /* ── MISSION ── */
+  .mission-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; max-width: 1200px; margin: 60px auto 0;
+    border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+  }
+  .mission-card {
+    padding: 52px 48px;
+    border-right: 1px solid var(--border);
+  }
+  .mission-card:last-child { border-right: none; }
+  .mission-icon { width: 44px; height: 44px; margin-bottom: 24px; color: var(--gold); }
+  .mission-card h3 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; margin-bottom: 14px; }
+  .mission-card p { color: var(--text-light); font-size: 15px; line-height: 1.75; }
+
+  /* ── PROBLEMS / SOLUTIONS ── */
+  .problems { background: var(--navy-mid); }
+  .problems-header { max-width: 680px; margin: 0 auto 60px; text-align: center; }
+  .problems-header .section-lead { margin: 0 auto; }
+  .problems-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; background: var(--border);
+    max-width: 1200px; margin: 0 auto;
+    border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+  }
+  .problem-card {
+    background: var(--navy-mid); padding: 40px 32px;
+    transition: background 0.2s;
+  }
+  .problem-card:hover { background: var(--navy-light); }
+  .problem-num { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--gold); margin-bottom: 20px; }
+  .problem-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+  .problem-card p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+  /* ── SERVICES ── */
+  .services-header { max-width: 680px; margin: 0 auto 60px; }
+  .services-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; max-width: 1200px; margin: 0 auto;
+  }
+  .service-card {
+    background: var(--navy-mid); border: 1px solid var(--border);
+    border-radius: 4px; padding: 48px 40px;
+    transition: border-color 0.2s;
+  }
+  .service-card:hover { border-color: rgba(29, 110, 207, 0.4); }
+  .service-card.featured {
+    background: var(--navy-light);
+    border-color: var(--blue-accent);
+  }
+  .service-icon {
+    width: 52px; height: 52px;
+    background: rgba(29, 110, 207, 0.15);
+    border: 1px solid rgba(29, 110, 207, 0.3);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 28px;
+  }
+  .service-icon svg { width: 24px; height: 24px; color: var(--blue-bright); }
+  .service-card h3 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+  .service-card p { color: var(--text-light); font-size: 15px; line-height: 1.75; margin-bottom: 24px; }
+  .service-list { list-style: none; }
+  .service-list li {
+    font-size: 13px; color: var(--text-muted);
+    padding: 7px 0; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .service-list li::before { content: '→'; color: var(--gold); font-size: 12px; }
+  .service-list li:last-child { border-bottom: none; }
+  .service-outcome {
+    margin-top: 28px; padding: 16px 20px;
+    background: rgba(200, 168, 71, 0.08);
+    border-left: 2px solid var(--gold);
+    font-size: 13px; color: var(--text-light); line-height: 1.65;
+  }
+
+  /* ── FRAMEWORK ── */
+  .framework { background: var(--navy-mid); }
+  .framework-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .framework-image img {
+    width: 100%; border-radius: 4px;
+    object-fit: cover; height: 500px;
+    filter: brightness(0.7) saturate(0.75);
+  }
+  .framework-pillars { display: flex; flex-direction: column; gap: 24px; margin-top: 36px; }
+  .fw-item { display: flex; gap: 16px; }
+  .fw-num {
+    font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700;
+    color: var(--gold); opacity: 0.4; flex-shrink: 0; line-height: 1; margin-top: 2px;
+  }
+  .fw-item h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .fw-item p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+  /* ── VALUES ── */
+  .values { padding: 96px 5%; }
+  .values-header { text-align: center; max-width: 620px; margin: 0 auto 64px; }
+  .values-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; max-width: 1200px; margin: 0 auto;
+  }
+  .value-card {
+    background: var(--navy-mid); border: 1px solid var(--border);
+    border-radius: 4px; padding: 44px 32px; text-align: center;
+  }
+  .value-icon-wrap {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(29, 110, 207, 0.12);
+    border: 1px solid rgba(29, 110, 207, 0.2);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+  }
+  .value-icon-wrap svg { width: 28px; height: 28px; color: var(--blue-bright); }
+  .value-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 12px; }
+  .value-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+  /* ── PARTNERS ── */
+  .partners { background: var(--navy-mid); }
+  .partners-content {
+    display: grid; grid-template-columns: 1fr 2fr;
+    gap: 80px; align-items: start;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .partners-image img {
+    width: 100%; border-radius: 4px;
+    object-fit: cover; height: 360px;
+    filter: brightness(0.7) saturate(0.7);
+  }
+  .partners-body p { color: var(--text-light); margin-bottom: 20px; }
+  .partner-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  .partner-tag {
+    padding: 8px 18px; border: 1px solid var(--border);
+    border-radius: 2px; font-size: 12px; font-weight: 500;
+    color: var(--text-muted); letter-spacing: 0.5px;
+  }
+
+  /* ── IMPACT ── */
+  .impact { padding: 96px 5%; }
+  .impact-inner { max-width: 1200px; margin: 0 auto; }
+  .impact-top {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center; margin-bottom: 72px;
+  }
+  .impact-image img {
+    width: 100%; border-radius: 4px;
+    object-fit: cover; height: 440px;
+    filter: brightness(0.75) saturate(0.7);
+  }
+  .impact-text p { color: var(--text-light); margin-bottom: 20px; }
+  .impact-metrics {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .metric {
+    background: var(--navy-mid); border: 1px solid var(--border);
+    border-radius: 4px; padding: 36px 28px; text-align: center;
+  }
+  .metric-num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--gold-light); }
+  .metric-label { font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+
+  /* ── CONTACT / CTA ── */
+  .contact { background: var(--navy-light); border-top: 1px solid var(--border); }
+  .contact-inner { max-width: 1200px; margin: 0 auto; }
+  .contact-top {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+    padding-bottom: 64px; border-bottom: 1px solid var(--border);
+  }
+  .contact-info h2 { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; margin-bottom: 16px; }
+  .contact-info p { color: var(--text-light); margin-bottom: 36px; }
+  .contact-items { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item h4 { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .contact-item a { font-size: 15px; color: var(--text-light); text-decoration: none; transition: color 0.2s; }
+  .contact-item a:hover { color: var(--white); }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .contact-form input, .contact-form textarea, .contact-form select {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    border-radius: 4px; padding: 13px 16px;
+    color: var(--white); font-family: 'Inter', sans-serif; font-size: 14px;
+    width: 100%; outline: none;
+    transition: border-color 0.2s;
+  }
+  .contact-form input:focus, .contact-form textarea:focus {
+    border-color: var(--blue-accent);
+  }
+  .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--text-muted); }
+  .contact-form textarea { resize: none; height: 120px; }
+  .form-submit {
+    background: var(--blue-accent); color: var(--white);
+    border: none; border-radius: 4px; padding: 14px 30px;
+    font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+    cursor: pointer; letter-spacing: 0.3px;
+    transition: background 0.2s; text-align: center;
+  }
+  .form-submit:hover { background: var(--blue-bright); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); padding: 40px 5%;
+    border-top: 1px solid var(--border);
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo { display: flex; align-items: center; gap: 10px; }
+  .footer-logo svg { width: 28px; height: 28px; }
+  .footer-logo-text { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 600; }
+  .footer-copy { font-size: 12px; color: var(--text-muted); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 12px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--white); }
+
+  /* ── CHARTER STRIP ── */
+  .charter { background: var(--blue); padding: 64px 5%; }
+  .charter-inner { max-width: 1200px; margin: 0 auto; }
+  .charter-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px; margin-top: 48px; }
+  .charter-item { text-align: center; }
+  .charter-item h4 { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .charter-item p { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.65; }
+  .charter-divider { width: 24px; height: 2px; background: var(--gold); margin: 0 auto 14px; }
+
+  @media (max-width: 900px) {
+    .about-inner, .framework-inner, .impact-top, .contact-top { grid-template-columns: 1fr; }
+    .mission-grid, .services-grid, .problems-grid, .values-grid { grid-template-columns: 1fr; }
+    .charter-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-image-wrap { order: -1; }
+    .hero-image { display: none; }
+    .partners-content { grid-template-columns: 1fr; }
+    .impact-metrics { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    .about-pillars { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="20" fill="#1a4a8a"/>
+      <path d="M28 14c-2-3-6-4-9-2s-6 3-8 6c2-1 5-1 7 1-3 0-5 2-6 4 2 0 4 0 5 2-4 1-6 4-5 7 3-2 7-3 10-1-1-2-1-5 1-7 3 2 5 5 4 8 2-3 3-7 1-10 2 0 4 1 5 3-1-4-3-8-5-11z" fill="#c8a847"/>
+      <circle cx="20" cy="20" r="3" fill="white" opacity="0.8"/>
+    </svg>
+    <div class="nav-logo-text">
+      Blue Hummingbird Trust
+      <span>Strategic Advisory</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#services">What We Do</a></li>
+    <li><a href="#framework">Framework</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80" alt="Modern city skyline at dusk">
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Building Enduring Institutions</div>
+    <h1>Building a Better Future Through <em>Trust</em> and Stewardship</h1>
+    <p class="hero-sub">Empowering organizations with strategic resilience, sound governance, and sustainable value creation across generations.</p>
+    <div class="hero-actions">
+      <a href="#about" class="btn-primary">
+        Discover Our Work
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Core service pillars</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Problems we solve</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2026</div>
+        <div class="stat-label">Established</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-image-wrap">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80" alt="Modern professional office space">
+      <div class="about-badge">
+        <div class="about-badge-num">2026</div>
+        <div class="about-badge-label">Chartered Trust</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <span class="section-tag">About Us</span>
+      <h2 class="section-title">A Strategic Enterprise Built on Lasting Foundations</h2>
+      <p>Blue Hummingbird Trust is a strategic enterprise focused on strengthening the foundations upon which organizations, institutions, and communities create sustainable value.</p>
+      <p>We operate at the intersection of business development, stakeholder engagement, risk awareness, and organizational resilience — supporting environments where people and enterprises can thrive together.</p>
+      <p>Founded on the principle that long-term success emerges from the effective alignment of stakeholders, responsible stewardship, and sound governance — we help institutions endure.</p>
+      <div class="about-pillars">
+        <div class="pillar"><div class="pillar-dot"></div>Business Development</div>
+        <div class="pillar"><div class="pillar-dot"></div>Stakeholder Engagement</div>
+        <div class="pillar"><div class="pillar-dot"></div>Organizational Resilience</div>
+        <div class="pillar"><div class="pillar-dot"></div>Risk Awareness</div>
+        <div class="pillar"><div class="pillar-dot"></div>Sound Governance</div>
+        <div class="pillar"><div class="pillar-dot"></div>Strategic Partnerships</div>
+      </div>
+      <a href="#services" class="btn-primary" style="display:inline-flex; margin-top:8px;">Explore Our Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section style="padding: 96px 5%; background: var(--navy);" id="mission">
+  <div style="max-width:1200px; margin:0 auto;">
+    <span class="section-tag" style="text-align:center; display:block;">Our Charter</span>
+    <h2 class="section-title" style="text-align:center; margin-bottom:12px;">Vision, Mission &amp; Values</h2>
+    <p class="section-lead" style="text-align:center; margin:0 auto 60px;">Guided by stewardship, resilience, and shared prosperity — we aspire to build institutions capable of creating value across generations.</p>
+    <div class="mission-grid">
+      <div class="mission-card">
+        <svg class="mission-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+        <h3>Our Vision</h3>
+        <p>To build a future where institutions thrive through responsible stewardship, strategic collaborations, and sustainable value creation that extends across generations.</p>
+      </div>
+      <div class="mission-card">
+        <svg class="mission-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <h3>Our Mission</h3>
+        <p>To strengthen institutional resilience by promoting integrated solutions, and advancing approaches that support sustainable growth, intergenerational value, and longevity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARTER STRIP -->
+<section class="charter">
+  <div class="charter-inner">
+    <span class="section-tag" style="text-align:center; display:block;">Our Commitments</span>
+    <h2 class="section-title" style="text-align:center;">The Blue Hummingbird Trust Charter</h2>
+    <div class="charter-grid">
+      <div class="charter-item">
+        <div class="charter-divider"></div>
+        <h4>To Organizations</h4>
+        <p>Stronger systems, strategic thinking, responsible governance, and sustainable growth.</p>
+      </div>
+      <div class="charter-item">
+        <div class="charter-divider"></div>
+        <h4>To Stakeholders</h4>
+        <p>Solutions recognizing the interconnected interests of all who are involved.</p>
+      </div>
+      <div class="charter-item">
+        <div class="charter-divider"></div>
+        <h4>To Our Partners</h4>
+        <p>Relationships founded on trust, mutual benefit, professionalism, and shared purpose.</p>
+      </div>
+      <div class="charter-item">
+        <div class="charter-divider"></div>
+        <h4>To Society</h4>
+        <p>Practices contributing to institutional strength and long-term economic prosperity.</p>
+      </div>
+      <div class="charter-item">
+        <div class="charter-divider"></div>
+        <h4>To Future Generations</h4>
+        <p>Decisions that extend beyond immediate outcomes and contribute to enduring value.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section class="problems" id="problems">
+  <div class="problems-header">
+    <span class="section-tag">The Problem We Solve</span>
+    <h2 class="section-title">Challenges Facing Modern Institutions</h2>
+    <p class="section-lead">Institutions today operate in increasingly complex environments characterized by uncertainty, changing expectations, and growing demands for sustainable performance.</p>
+  </div>
+  <div class="problems-grid">
+    <div class="problem-card">
+      <div class="problem-num">01</div>
+      <h4>Organizational Vulnerability</h4>
+      <p>Many organizations lack adequate mechanisms to anticipate, manage, and mitigate risks that threaten their operations, people, assets, and future sustainability.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">02</div>
+      <h4>Fragmented Stakeholder Interests</h4>
+      <p>Businesses often struggle to align employees, management, shareholders, customers, regulators, and partners — resulting in inefficiencies and lost opportunities.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">03</div>
+      <h4>Reactive Decision-Making</h4>
+      <p>Organizations frequently respond to challenges only after they materialize, increasing exposure to avoidable losses and operational disruption.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">04</div>
+      <h4>Employee Welfare Gaps</h4>
+      <p>Many businesses face challenges providing accessible and sustainable support systems that protect and empower their workforce long-term.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">05</div>
+      <h4>Governance Challenges</h4>
+      <p>Many institutions achieve short-term success but lack the structures, partnerships, and strategic perspective necessary to sustain performance over the long term.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">06</div>
+      <h4>Limited Integrated Solutions</h4>
+      <p>Organizations engaging multiple service providers end up with fragmented approaches that fail to address the broader environment in which risks and opportunities emerge.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section style="padding: 96px 5%; background: var(--navy);" id="services">
+  <div class="services-header">
+    <span class="section-tag">What We Do</span>
+    <h2 class="section-title">Our Core Services</h2>
+    <p class="section-lead">Two interconnected service pillars designed to strengthen organizational resilience, operational effectiveness, and sustainable growth.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card featured">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+      </div>
+      <h3>Business Systems &amp; Process Development</h3>
+      <p>Strong organizations are built on systems rather than individuals. We assist businesses in developing the structures, processes, and operating frameworks necessary to improve consistency, accountability, and operational performance.</p>
+      <ul class="service-list">
+        <li>Standard Operating Procedure (SOP) Development</li>
+        <li>Process Mapping and Optimization</li>
+        <li>Role and Responsibility Definition</li>
+        <li>Workflow Design</li>
+        <li>Implementation Support</li>
+      </ul>
+      <div class="service-outcome">
+        <strong style="color:var(--gold);">Outcome:</strong> Organizations that operate efficiently, maintain consistency, and reduce dependency on individual personnel.
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+        </svg>
+      </div>
+      <h3>Growth &amp; Expansion Strategy</h3>
+      <p>Growth requires more than ambition — it requires structure, planning, and strategic execution. We support organizations seeking to expand their operations, strengthen their market position, and pursue new opportunities with confidence.</p>
+      <ul class="service-list">
+        <li>Strategic Planning</li>
+        <li>Business Development Support</li>
+        <li>Market Entry Strategy</li>
+        <li>Organizational Structuring</li>
+        <li>Growth Advisory Services</li>
+      </ul>
+      <div class="service-outcome">
+        <strong style="color:var(--gold);">Outcome:</strong> Organizations positioned to scale sustainably while maintaining operational stability and stakeholder confidence.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAMEWORK -->
+<section class="framework" id="framework">
+  <div class="framework-inner">
+    <div class="framework-image">
+      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80" alt="Professionals in strategic discussion">
+    </div>
+    <div>
+      <span class="section-tag">Our Approach</span>
+      <h2 class="section-title">The Total Security Framework</h2>
+      <p class="section-lead" style="margin-bottom:0;">Security extends beyond the protection of assets. We view it as the condition in which people, organizations, and stakeholders are positioned to operate, grow, and create value with confidence.</p>
+      <div class="framework-pillars">
+        <div class="fw-item">
+          <div class="fw-num">01</div>
+          <div>
+            <h4>Governance Support</h4>
+            <p>Sound oversight, ethical conduct, prudent risk awareness, and alignment with mission and values to maintain stakeholder confidence.</p>
+          </div>
+        </div>
+        <div class="fw-item">
+          <div class="fw-num">02</div>
+          <div>
+            <h4>Strategic Partner Coordination</h4>
+            <p>Access to specialized knowledge, innovative solutions, and complementary capabilities that strengthen outcomes across the board.</p>
+          </div>
+        </div>
+        <div class="fw-item">
+          <div class="fw-num">03</div>
+          <div>
+            <h4>Compliance Monitoring</h4>
+            <p>Proactive frameworks ensuring organizations meet regulatory requirements while maintaining operational integrity.</p>
+          </div>
+        </div>
+        <div class="fw-item">
+          <div class="fw-num">04</div>
+          <div>
+            <h4>Organizational Resilience Support</h4>
+            <p>Building the capacity to anticipate challenges, manage uncertainty, and create sustainable value over the long term.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values" id="values">
+  <div class="values-header">
+    <span class="section-tag">Core Values</span>
+    <h2 class="section-title">What Guides Everything We Do</h2>
+  </div>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <h3>Stewardship</h3>
+      <p>We recognize that leadership carries a responsibility to safeguard and enhance value for current and future stakeholders. Every decision is made with this weight in mind.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <h3>Collaboration</h3>
+      <p>Meaningful and sustainable outcomes are achieved through partnership and collective effort. No single organization possesses all the resources required to address every challenge.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <h3>Sustainability</h3>
+      <p>We promote decisions that create enduring value while considering their broader impact on people, organizations, and communities — today and for future generations.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="partners" id="partners">
+  <div class="partners-content">
+    <div>
+      <img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?w=700&q=80" alt="Team collaboration in a boardroom" class="partners-image" style="display:block; width:100%; border-radius:4px; object-fit:cover; height:360px; filter:brightness(0.7) saturate(0.7);">
+    </div>
+    <div class="partners-body">
+      <span class="section-tag">Strategic Partners</span>
+      <h2 class="section-title">Stronger Together</h2>
+      <p>Blue Hummingbird Trust believes that meaningful progress is achieved through collaboration. No single organization possesses all the resources, expertise, or perspectives required to address every challenge within an increasingly interconnected world.</p>
+      <p>Our strategic partnerships are built on shared values, mutual trust, and a common commitment to creating sustainable value. Through collaboration with professional service providers, industry specialists, institutions, and other stakeholders, we expand our ability to support the organizations and communities we serve.</p>
+      <p>By cultivating a network of trusted partners, Blue Hummingbird Trust continues to enhance its capacity to contribute to stronger organizations, more resilient communities, and a more sustainable future.</p>
+      <div class="partner-tags">
+        <span class="partner-tag">Professional Services</span>
+        <span class="partner-tag">Industry Specialists</span>
+        <span class="partner-tag">Financial Institutions</span>
+        <span class="partner-tag">Governance Bodies</span>
+        <span class="partner-tag">Community Organizations</span>
+        <span class="partner-tag">Research Partners</span>
+      </div>
+      <a href="#contact" class="btn-primary" style="display:inline-flex; margin-top:36px;">Partner With Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="impact" id="impact">
+  <div class="impact-inner">
+    <div class="impact-top">
+      <div>
+        <span class="section-tag">Impact &amp; Future Vision</span>
+        <h2 class="section-title">A Future Built to Last</h2>
+        <div class="impact-text">
+          <p>Blue Hummingbird Trust aspires to contribute to a future where organizations are not only successful, but resilient, responsible, and capable of creating lasting value for all stakeholders.</p>
+          <p>Our vision extends beyond addressing immediate challenges. We seek to support the development of stronger institutions, healthier stakeholder relationships, and environments where sustainable growth can flourish.</p>
+          <p>As we look to the future, we envision Blue Hummingbird Trust serving as a trusted catalyst for organizational resilience and stakeholder empowerment — expanding reach, deepening partnerships, and continuously refining approaches to meet changing needs.</p>
+          <p style="font-style:italic; color:var(--gold-light); margin-top:28px; border-left:2px solid var(--gold); padding-left:20px;">Our measure of success is not only the value we create today, but the enduring impact we help make possible for future generations.</p>
+        </div>
+      </div>
+      <div class="impact-image">
+        <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=900&q=80" alt="Corporate building representing institutional strength">
+      </div>
+    </div>
+    <div class="impact-metrics">
+      <div class="metric">
+        <div class="metric-num">Resilient</div>
+        <div class="metric-label">Institutions Built to Endure</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">Integrated</div>
+        <div class="metric-label">Holistic Solutions Approach</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">Generational</div>
+        <div class="metric-label">Long-Term Value Creation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-top">
+      <div class="contact-info">
+        <span class="section-tag">Get In Touch</span>
+        <h2>Let's Build Something That Endures</h2>
+        <p>Whether you're exploring strategic partnerships, seeking advisory support, or looking to strengthen your organization's resilience — we'd like to hear from you.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <h4>General Inquiries</h4>
+            <a href="mailto:info@bluehummingbirdtrust.com">info@bluehummingbirdtrust.com</a>
+          </div>
+          <div class="contact-item">
+            <h4>Project Proposals</h4>
+            <a href="mailto:projects@bluehummingbirdtrust.com">projects@bluehummingbirdtrust.com</a>
+          </div>
+          <div class="contact-item">
+            <h4>Strategic Partnerships</h4>
+            <a href="mailto:partnerships@bluehummingbirdtrust.com">partnerships@bluehummingbirdtrust.com</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form">
+          <div class="form-row">
+            <input type="text" placeholder="First name">
+            <input type="text" placeholder="Last name">
+          </div>
+          <input type="email" placeholder="Email address">
+          <input type="text" placeholder="Organization">
+          <select style="background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:4px; padding:13px 16px; color:var(--text-muted); font-family:'Inter',sans-serif; font-size:14px; width:100%; outline:none;">
+            <option>General Inquiry</option>
+            <option>Project Proposal</option>
+            <option>Strategic Partnership</option>
+            <option>Advisory Services</option>
+          </select>
+          <textarea placeholder="Tell us about your organization and how we can help..."></textarea>
+          <button class="form-submit">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="20" fill="#1a4a8a"/>
+        <path d="M28 14c-2-3-6-4-9-2s-6 3-8 6c2-1 5-1 7 1-3 0-5 2-6 4 2 0 4 0 5 2-4 1-6 4-5 7 3-2 7-3 10-1-1-2-1-5 1-7 3 2 5 5 4 8 2-3 3-7 1-10 2 0 4 1 5 3-1-4-3-8-5-11z" fill="#c8a847"/>
+        <circle cx="20" cy="20" r="3" fill="white" opacity="0.8"/>
+      </svg>
+      <span class="footer-logo-text">Blue Hummingbird Trust</span>
+    </div>
+    <div class="footer-copy">© 2026 Blue Hummingbird Trust. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#framework">Framework</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.problem-card, .service-card, .value-card, .mission-card, .charter-item, .fw-item, .metric').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+    observer.observe(el);
+  });
+
+  document.querySelector('.form-submit').addEventListener('click', function() {
+    this.textContent = 'Message Sent ✓';
+    this.style.background = '#0f6e56';
+    setTimeout(() => { this.textContent = 'Send Message'; this.style.background = ''; }, 3000);
+  });
+</script>
+</body>
+</html>
