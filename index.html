@@ -386,7 +386,49 @@
   .charter-item p { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.65; }
   .charter-divider { width: 24px; height: 2px; background: var(--gold); margin: 0 auto 14px; }
 
-  /* ── CHATBOT ── */
+  /* ── CHATBOT PAGE SECTION ── */
+  .chatbot-page { background: var(--navy-mid); }
+  .chatbot-page-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: start;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .chatbot-page-intro .section-lead { margin-bottom: 32px; }
+  .chatbot-page-topics { margin-top: 8px; }
+  .topics-label { font-size: 13px; color: var(--text-muted); display: block; margin-bottom: 14px; }
+  .topics-list { display: flex; flex-wrap: wrap; gap: 10px; }
+  .page-quick-reply {
+    background: rgba(29,110,207,0.12); border: 1px solid rgba(29,110,207,0.25);
+    color: var(--text-light); padding: 9px 16px; border-radius: 20px;
+    font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .page-quick-reply:hover { background: rgba(29,110,207,0.25); color: var(--white); border-color: rgba(29,110,207,0.45); }
+
+  .chatbot-page-panel {
+    background: var(--navy); border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; display: flex; flex-direction: column;
+    height: 560px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .chatbot-page-panel .chat-header {
+    background: var(--navy-light);
+  }
+  #pageChatMessages {
+    flex: 1; overflow-y: auto; padding: 20px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  #pageChatMessages::-webkit-scrollbar { width: 4px; }
+  #pageChatMessages::-webkit-scrollbar-track { background: transparent; }
+  #pageChatMessages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .chatbot-page-panel .chat-input-area { background: var(--navy-light); }
+
+  @media (max-width: 900px) {
+    .chatbot-page-inner { grid-template-columns: 1fr; gap: 40px; }
+    .chatbot-page-panel { height: 480px; }
+  }
+
+  /* ── CHATBOT WIDGET ── */
   #chat-fab {
     position: fixed; bottom: 28px; right: 28px; z-index: 1000;
     width: 60px; height: 60px; border-radius: 50%;
@@ -613,7 +655,7 @@
     <li><a href="#about">About Us</a></li>
     <li><a href="#services">What We Do</a></li>
     <li><a href="#framework">Framework</a></li>
-    <li><a href="#impact">Impact</a></li>
+    <li><a href="#chatbot">Ask BHT</a></li>
     <li><a href="#contact" class="nav-cta">Contact</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
@@ -626,7 +668,7 @@
   <a href="#about" onclick="closeMobileMenu()">About Us</a>
   <a href="#services" onclick="closeMobileMenu()">What We Do</a>
   <a href="#framework" onclick="closeMobileMenu()">Framework</a>
-  <a href="#impact" onclick="closeMobileMenu()">Impact</a>
+  <a href="#chatbot" onclick="closeMobileMenu()">Ask BHT</a>
   <a href="#contact" class="mob-cta" onclick="closeMobileMenu()">Contact</a>
 </div>
 
@@ -984,6 +1026,49 @@
   </div>
 </section>
 
+<!-- CHATBOT PAGE SECTION -->
+<section class="chatbot-page" id="chatbot">
+  <div class="chatbot-page-inner">
+    <div class="chatbot-page-intro">
+      <span class="section-tag">Ask BHT</span>
+      <h2 class="section-title">Get Instant Answers</h2>
+      <p class="section-lead">Curious about our charter, services, or the Total Security Framework? Ask the BHT Assistant directly below — answers are drawn straight from our company profile, no waiting required.</p>
+      <div class="chatbot-page-topics">
+        <span class="topics-label">Try asking about:</span>
+        <div class="topics-list">
+          <button class="page-quick-reply" onclick="sendPageQuick('What services do you offer?')">Our services</button>
+          <button class="page-quick-reply" onclick="sendPageQuick('What is the Total Security Framework?')">Total Security</button>
+          <button class="page-quick-reply" onclick="sendPageQuick('What problems does BHT solve?')">Problems solved</button>
+          <button class="page-quick-reply" onclick="sendPageQuick('What is your vision and mission?')">Vision &amp; mission</button>
+          <button class="page-quick-reply" onclick="sendPageQuick('How can I partner with BHT?')">Partnership</button>
+          <button class="page-quick-reply" onclick="sendPageQuick('How do I contact you?')">Contact details</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="chatbot-page-panel">
+      <div class="chat-header">
+        <div class="chat-avatar">
+          <img src="bht2.png" alt="BHT Assistant Avatar" onerror="this.style.display='none'">
+        </div>
+        <div class="chat-header-info">
+          <div class="chat-header-name">BHT Assistant</div>
+          <div class="chat-header-status">Online · Instant answers</div>
+        </div>
+      </div>
+
+      <div class="chat-messages" id="pageChatMessages"></div>
+
+      <div class="chat-input-area">
+        <textarea class="chat-input" id="pageChatInput" placeholder="Ask about our services, charter, or framework…" rows="1"></textarea>
+        <button class="chat-send-btn" id="pageChatSend" aria-label="Send message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="contact-inner">
@@ -1067,7 +1152,7 @@
     </div>
     <div class="chat-header-info">
       <div class="chat-header-name">BHT Assistant</div>
-      <div class="chat-header-status">Online · AI-powered</div>
+      <div class="chat-header-status">Online · Instant answers</div>
     </div>
     <button class="chat-close-btn" id="chatClose" aria-label="Close chat">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1159,176 +1244,131 @@
   let chatHistory = [];
   let isOpen = false;
 
-  const SYSTEM_PROMPT = `You are the official AI assistant for Blue Hummingbird Trust (BHT). You are knowledgeable, warm, and professional. You answer questions exclusively using the company profile knowledge base below. Never invent information not contained here.
+  // ── RULE-BASED KNOWLEDGE BASE ──
+  // Each entry: keywords (matched against the lowercased user message) + the answer to give.
+  // findAnswer() scores every entry by keyword overlap and returns the strongest match.
+  const KB = [
+    {
+      id: 'greeting',
+      keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', 'howzit', 'sup'],
+      answer: "Hello! 👋 I'm the BHT Assistant. I can tell you about Blue Hummingbird Trust's services, charter, framework, partners, and how to get in touch. What would you like to know?"
+    },
+    {
+      id: 'who',
+      keywords: ['who are you', 'what is bht', 'what is blue hummingbird', 'about bht', 'about blue hummingbird', 'company overview', 'what do you do', 'who is bht', 'overview'],
+      answer: "Blue Hummingbird Trust is a strategic enterprise focused on strengthening the foundations upon which organizations, institutions, and communities create sustainable value. We operate at the intersection of business development, stakeholder engagement, risk awareness, and organizational resilience — helping people and enterprises thrive together. We're founded on the belief that long-term success comes from aligned stakeholders, responsible stewardship, and sound governance."
+    },
+    {
+      id: 'foreword',
+      keywords: ['foreword', 'institutional foreword', 'philosophy', 'why bht exists', 'purpose of bht'],
+      answer: "Institutions shape nations, industries, communities, and destinies — yet many remain vulnerable to leadership transitions, trends, and invisible systems. Blue Hummingbird Trust's commitment is to help build institutions capable of enduring and creating value across generations, through conceptual frameworks, advisory services, and strategic partnerships."
+    },
+    {
+      id: 'charter',
+      keywords: ['charter', 'commit', 'commitment', 'five commitments', 'pledges'],
+      answer: "The Blue Hummingbird Trust Charter outlines five commitments:<br><br>• <strong>To Organizations</strong> — stronger systems, strategic thinking, responsible governance, and sustainable growth.<br>• <strong>To Stakeholders</strong> — solutions that recognize everyone's interconnected interests.<br>• <strong>To Our Partners</strong> — relationships built on trust, mutual benefit, and shared purpose.<br>• <strong>To Society</strong> — practices that build institutional strength and long-term prosperity.<br>• <strong>To Future Generations</strong> — decisions that extend beyond immediate outcomes."
+    },
+    {
+      id: 'vision',
+      keywords: ['vision', 'future where institutions'],
+      answer: "Our Vision: To build a future where institutions thrive through responsible stewardship, strategic collaborations, and sustainable value creation."
+    },
+    {
+      id: 'mission',
+      keywords: ['mission', 'our mission'],
+      answer: "Our Mission: To strengthen institutional resilience by promoting integrated solutions, and advancing approaches that support sustainable growth, intergenerational value, and longevity."
+    },
+    {
+      id: 'values',
+      keywords: ['core values', 'values', 'stewardship', 'collaboration value', 'sustainability value', 'what do you value', 'value system'],
+      answer: "Our Core Values:<br><br>• <strong>Stewardship</strong> — leadership carries a responsibility to safeguard and enhance value for current and future stakeholders.<br>• <strong>Collaboration</strong> — meaningful, sustainable outcomes are achieved through partnership and collective effort.<br>• <strong>Sustainability</strong> — we promote decisions that create enduring value while considering their broader impact on people, organizations, and communities."
+    },
+    {
+      id: 'problems',
+      keywords: ['problem', 'challenge', 'pain point', 'issue you solve', 'what problems', 'vulnerab'],
+      answer: "Blue Hummingbird Trust helps organizations address six common challenges:<br><br>1. <strong>Organizational Vulnerability</strong> — inadequate risk mechanisms<br>2. <strong>Fragmented Stakeholder Interests</strong> — misaligned employees, shareholders, customers, regulators<br>3. <strong>Reactive Decision-Making</strong> — responding only after problems materialize<br>4. <strong>Employee Welfare & Security Gaps</strong> — limited support systems for the workforce<br>5. <strong>Governance & Sustainability Challenges</strong> — lacking long-term structures<br>6. <strong>Limited Access to Integrated Solutions</strong> — fragmented, isolated service providers<br><br>We address these through strategic partnerships, collaborative solutions, and frameworks that strengthen resilience and confidence."
+    },
+    {
+      id: 'solutions',
+      keywords: ['our solutions', 'how do you solve', 'solution approach', 'how does bht help', 'how does bht work'],
+      answer: "BHT responds to organizational challenges through integrated solutions designed to strengthen resilience, support stakeholder well-being, and promote sustainable growth. Rather than addressing issues in isolation, we facilitate solutions through strategic collaboration, stakeholder-focused initiatives, and access to trusted service providers — guided by stewardship and proactive risk awareness."
+    },
+    {
+      id: 'services',
+      keywords: ['service', 'what do you offer', 'sop', 'process mapping', 'process development', 'business systems', 'workflow'],
+      answer: "BHT delivers solutions through two service pillars:<br><br><strong>1. Business Systems & Process Development</strong> — SOP development, process mapping & optimization, role definition, workflow design, and implementation support. Outcome: organizations that operate efficiently and consistently.<br><br><strong>2. Growth & Expansion Strategy</strong> — strategic planning, business development support, market entry strategy, organizational structuring, and growth advisory. Outcome: organizations positioned to scale sustainably.<br><br>Ask me about either pillar for more detail!"
+    },
+    {
+      id: 'growth-strategy',
+      keywords: ['growth', 'expansion', 'market entry', 'scale', 'scaling', 'business development'],
+      answer: "Our <strong>Growth & Expansion Strategy</strong> pillar supports organizations expanding operations, strengthening market position, and pursuing new opportunities. Services include strategic planning, business development support, market entry strategy, organizational structuring, and growth advisory services. Outcome: organizations positioned to scale sustainably while maintaining operational stability and stakeholder confidence."
+    },
+    {
+      id: 'systems-pillar',
+      keywords: ['standard operating procedure', 'sop development', 'process optimization', 'role and responsibility'],
+      answer: "Our <strong>Business Systems & Process Development</strong> pillar helps businesses build the structures, processes, and frameworks needed for consistency and accountability. Services include SOP development, process mapping and optimization, role and responsibility definition, workflow design, and implementation support. Outcome: organizations that operate efficiently and reduce dependency on individual personnel."
+    },
+    {
+      id: 'framework',
+      keywords: ['total security', 'security framework', 'framework', 'governance support', 'compliance monitoring', 'resilience support'],
+      answer: "The <strong>Total Security Framework</strong> is BHT's philosophy that security extends beyond protecting assets — it's the condition where people, organizations, and stakeholders can operate, grow, and create value with confidence.<br><br>Framework services include:<br>• Governance Support<br>• Strategic Partner Coordination<br>• Compliance Monitoring<br>• Advisory Services<br>• Organizational Resilience Support<br><br>Outcome: organizations better prepared to anticipate challenges and create sustainable value."
+    },
+    {
+      id: 'partners',
+      keywords: ['partner', 'partnership', 'collaborat', 'strategic partner', 'network'],
+      answer: "Blue Hummingbird Trust believes meaningful progress is achieved through collaboration — no single organization has all the resources or perspectives needed to address every challenge. Our partnerships with professional service providers, industry specialists, institutions, and other stakeholders are built on shared values, mutual trust, and a commitment to sustainable value. Interested in partnering with us? Email partnerships@bluehummingbirdtrust.com."
+    },
+    {
+      id: 'leadership',
+      keywords: ['leadership', 'governance', 'board', 'who runs', 'management team', 'accountability'],
+      answer: "BHT is guided by a governance philosophy emphasizing stewardship, accountability, transparency, and responsible decision-making. Our leadership approach recognizes that long-term success depends on strong systems, clear responsibilities, and a commitment to stakeholders — supported by sound oversight, ethical conduct, and prudent risk awareness."
+    },
+    {
+      id: 'impact',
+      keywords: ['impact', 'future vision', 'what is your goal', 'long term goal', 'aspire'],
+      answer: "Blue Hummingbird Trust aspires to a future where organizations are not just successful, but resilient, responsible, and capable of creating lasting value for all stakeholders. We envision BHT as a trusted catalyst for organizational resilience and stakeholder empowerment — expanding reach, deepening partnerships, and refining our approach over time.<br><br><em>Our measure of success is not only the value we create today, but the enduring impact we help make possible for future generations.</em>"
+    },
+    {
+      id: 'contact',
+      keywords: ['contact', 'email', 'reach you', 'get in touch', 'phone', 'address', 'talk to someone'],
+      answer: "You can reach us at:<br><br>• <strong>General Inquiries:</strong> info@bluehummingbirdtrust.com<br>• <strong>Project Proposals:</strong> projects@bluehummingbirdtrust.com<br>• <strong>Strategic Partnerships:</strong> partnerships@bluehummingbirdtrust.com<br><br>You can also reach us directly on WhatsApp using the button below the quick replies."
+    },
+    {
+      id: 'whatsapp',
+      keywords: ['whatsapp', 'whats app', 'chat directly', 'call you'],
+      answer: "You can chat with us directly on WhatsApp — just tap the WhatsApp button in this chat window, or email info@bluehummingbirdtrust.com and we'll get back to you."
+    },
+    {
+      id: 'thanks',
+      keywords: ['thank', 'thanks', 'cheers', 'appreciate'],
+      answer: "You're very welcome! Is there anything else you'd like to know about Blue Hummingbird Trust?"
+    },
+    {
+      id: 'bye',
+      keywords: ['bye', 'goodbye', 'see you', 'later'],
+      answer: "Thanks for stopping by! Feel free to reach out anytime at info@bluehummingbirdtrust.com. Have a great day. 👋"
+    }
+  ];
 
-=== BLUE HUMMINGBIRD TRUST — FULL COMPANY PROFILE 2026 ===
+  const FALLBACK_ANSWER = "That's a great question, but it falls outside what I can answer here. Please reach out directly at <a href='mailto:info@bluehummingbirdtrust.com'>info@bluehummingbirdtrust.com</a> or via WhatsApp — the team would be happy to help.";
 
-ABSTRACT:
-This profile presents the identity, philosophy, capabilities, and aspirations of Blue Hummingbird Trust. It provides insight into the organization's understanding of the challenges facing modern institutions, its commitment to strengthening organizational resilience and stakeholder value, and the frameworks that inform its approach to sustainable growth.
-
----
-1. INSTITUTIONAL FOREWORD
-Institutions shape nations, industries, communities, and destinies. Yet many remain vulnerable to leadership transitions, trends, and invisible systems. This presents a challenge in developing nations — not merely on the account of creating organisations and corporate bodies, but building institutions capable of enduring and creating value across generations.
-
-Blue Hummingbird Trust's commitment is to contribute to the development of enduring institutions, better governance strategies and long-term institutional ambition. Through conceptual frameworks, advisory services and strategic partnerships, BHT seeks to advance principles that support long-term capabilities and institutional excellence.
-
----
-2. COMPANY OVERVIEW
-Blue Hummingbird Trust is a strategic enterprise focused on strengthening the foundations upon which organizations, institutions, and communities create sustainable value. Operating at the intersection of business development, stakeholder engagement, risk awareness, and organizational resilience, BHT seeks to support environments where people and enterprises can thrive together.
-
-The Blue Hummingbird Trust is founded on the principle that long-term success is rarely the product of isolated effort. Rather, it emerges from the effective alignment of stakeholders, responsible stewardship of resources, sound governance, and an appreciation of the interconnected systems within which organizations operate. As markets, technologies, and societal expectations continue to evolve, organizations require approaches that balance immediate performance with long-term sustainability.
-
-Blue Hummingbird Trust works to foster strategic partnerships and collaborative solutions that contribute to the security, stability, and growth of the organizations and communities it serves. Through its initiatives, BHT promotes approaches that recognize both the opportunities and vulnerabilities present within modern operating environments, encouraging proactive rather than reactive responses to change.
-
-Guided by a commitment to stewardship, resilience, and shared prosperity, Blue Hummingbird Trust aspires to contribute to the development of enduring institutions capable of creating value across generations. The Trust's work is informed by the belief that sustainable progress is achieved when stakeholders move beyond individual interests and work collectively toward common goals and mutually beneficial outcomes.
-
----
-3. OUR CHARTER — THE BLUE HUMMINGBIRD TRUST CHARTER
-Blue Hummingbird Trust exists to advance collaboration, stewardship, and sustainable value creation within the organizations and communities we serve.
-
-In pursuit of this purpose, we commit:
-
-i. To Organizations: To support the development of stronger systems, strategic thinking, responsible governance, and sustainable growth.
-
-ii. To Stakeholders: To promote solutions that recognize the interconnected interests of employees, management, shareholders, customers, regulators, partners, and communities.
-
-iii. To Our Partners: To cultivate relationships founded on trust, mutual benefit, professionalism, and shared purpose.
-
-iv. To Society: To encourage practices that contribute to institutional strength, economic participation, and long-term prosperity.
-
-v. To Future Generations: To promote decisions that extend beyond immediate outcomes and contribute to enduring value and resilience.
-
-This Charter serves as a guiding commitment for our actions, partnerships, and decisions as we pursue our vision, mission and values.
-
----
-4. VISION, MISSION & VALUES
-
-Our Vision: To build a future where institutions thrive through responsible stewardship, strategic collaborations and sustainable value creation.
-
-Our Mission: To strengthen institutional resilience by promoting integrated solutions, and advancing approaches that support sustainable growth, intergenerational value and longevity.
-
-Our Core Values:
-i. Stewardship — We recognize that leadership carries a responsibility to safeguard and enhance value for current and future stakeholders.
-ii. Collaboration — We believe meaningful and sustainable outcomes are achieved through partnership and collective effort and long strategic thinking.
-iii. Sustainability — We promote decisions and actions that create enduring value while considering their broader impact on people, organizations, and communities.
-
----
-5. THE PROBLEM WE SOLVE
-Institutions today operate in increasingly complex environments characterized by uncertainty, changing stakeholder expectations, operational risks, regulatory pressures, and growing demands for sustainable performance. While many businesses focus on immediate challenges, underlying vulnerabilities often remain unaddressed until they become costly disruptions.
-
-Blue Hummingbird Trust helps organizations address the following challenges:
-
-i. Organizational Vulnerability — Many organizations lack adequate mechanisms to anticipate, manage, and mitigate risks that threaten their operations, people, assets, and future sustainability.
-
-ii. Fragmented Stakeholder Interests — Businesses often struggle to align the interests of employees, management, shareholders, customers, regulators, suppliers, and other stakeholders, resulting in inefficiencies, conflict, and lost opportunities.
-
-iii. Reactive Decision-Making — Organizations frequently respond to challenges only after they have materialized, increasing exposure to avoidable losses and operational disruption.
-
-iv. Employee Welfare and Security Gaps — The well-being and security of employees are critical to organizational success, yet many businesses face challenges in providing accessible and sustainable support systems that protect and empower their workforce.
-
-v. Governance and Sustainability Challenges — Many institutions achieve short-term success but lack the structures, partnerships, and strategic perspective necessary to sustain performance over the long term.
-
-vi. Limited Access to Integrated Solutions — Organizations often engage multiple service providers to address isolated issues, resulting in fragmented approaches that fail to address the broader environment in which risks and opportunities emerge.
-
-Blue Hummingbird Trust addresses these challenges by facilitating strategic partnerships, promoting collaborative solutions, and supporting frameworks that strengthen organizational resilience, stakeholder confidence, and sustainable growth.
-
----
-6. OUR SOLUTIONS
-Blue Hummingbird Trust responds to organizational challenges through integrated solutions designed to strengthen resilience, support stakeholder well-being, and promote sustainable growth. Our approach recognizes that organizational success is influenced by a combination of people, systems, resources, relationships, and external environments.
-
-Rather than addressing challenges in isolation, BHT facilitates solutions that contribute to the overall stability and effectiveness of the organizations it serves. Through strategic collaboration, stakeholder-focused initiatives, and access to trusted service providers, BHT helps organizations create stronger foundations for performance and long-term sustainability.
-
-Our solutions are guided by a commitment to stewardship, proactive risk awareness, and the belief that lasting value is created when organizational objectives and stakeholder interests are aligned.
-
----
-7. OUR CORE SERVICES
-Blue Hummingbird Trust delivers solutions through two interconnected service pillars:
-
-SERVICE PILLAR 1 — BUSINESS SYSTEMS & PROCESS DEVELOPMENT:
-Strong organizations are built on systems rather than individuals. BHT assists businesses in developing the structures, processes, and operating frameworks necessary to improve consistency, accountability, and operational performance.
-
-Services include:
-• Standard Operating Procedure (SOP) Development
-• Process Mapping and Optimization
-• Role and Responsibility Definition
-• Workflow Design
-• Implementation Support
-
-Outcome: Organizations that operate efficiently, maintain consistency, and reduce dependency on individual personnel.
-
-SERVICE PILLAR 2 — GROWTH & EXPANSION STRATEGY:
-Growth requires more than ambition — it requires structure, planning, and strategic execution. BHT supports organizations seeking to expand their operations, strengthen their market position, and pursue new opportunities with confidence.
-
-Services include:
-• Strategic Planning
-• Business Development Support
-• Market Entry Strategy
-• Organizational Structuring
-• Growth Advisory Services
-
-Outcome: Organizations positioned to scale sustainably while maintaining operational stability and stakeholder confidence.
-
----
-8. THE TOTAL SECURITY FRAMEWORK
-At Blue Hummingbird Trust, security extends beyond the protection of assets. We view security as the condition in which people, organizations, and stakeholders are positioned to operate, grow, and create value with confidence.
-
-Our Total Security philosophy recognizes that organizational resilience is shaped by multiple interconnected factors, including stakeholder well-being, operational continuity, strategic preparedness, responsible governance, and access to reliable support systems. When one area is weakened, the effects are often felt across the broader organization.
-
-BHT advocates for a holistic perspective that considers both visible and emerging challenges. By encouraging proactive planning, responsible stewardship, and collaborative problem-solving, BHT helps create environments where organizations are better equipped to withstand uncertainty while pursuing sustainable growth.
-
-Total Security is therefore not a product or a service. It is a commitment to strengthening the conditions that enable organizations and their stakeholders to thrive over the long term.
-
-Total Security Framework services include:
-• Governance Support
-• Strategic Partner Coordination
-• Compliance Monitoring
-• Advisory Services
-• Organizational Resilience Support
-
-Outcome: Organizations that are better prepared to anticipate challenges, manage uncertainty, and create sustainable value over the long term.
-
----
-9. STRATEGIC PARTNERS
-Blue Hummingbird Trust believes that meaningful progress is achieved through collaboration. No single organization possesses all the resources, expertise, or perspectives required to address every challenge within an increasingly interconnected world. Our strategic partnerships are built on shared values, mutual trust, and a common commitment to creating sustainable value.
-
-Through collaboration with professional service providers, industry specialists, institutions, and other stakeholders, BHT expands its ability to support the organizations and communities it serves. These partnerships enable access to specialized knowledge, innovative solutions, and complementary capabilities that strengthen outcomes.
-
-By cultivating a network of trusted partners, Blue Hummingbird Trust continues to enhance its capacity to contribute to stronger organizations, more resilient communities, and a more sustainable future.
-
----
-10. LEADERSHIP AND GOVERNANCE
-Blue Hummingbird Trust is guided by a governance philosophy that emphasizes stewardship, accountability, transparency, and responsible decision-making. Sustainable organizations are built on strong systems, clear responsibilities, and a commitment to serving the interests of stakeholders.
-
-BHT's leadership approach recognizes that the long-term success of any organization depends not only on individual capability but also on the strength of the structures, relationships, and principles that guide its actions. BHT seeks to cultivate a culture of responsibility, collaboration, and continuous improvement across all aspects of its operations.
-
-Governance at Blue Hummingbird Trust is designed to support sound oversight, ethical conduct, prudent risk awareness, and alignment with the mission and values. As the organization evolves, BHT remains committed to strengthening the systems and partnerships that enable it to fulfil its purpose and create lasting value for the organizations and communities it serves.
-
----
-11. IMPACT AND FUTURE VISION
-Blue Hummingbird Trust aspires to contribute to a future where organizations are not only successful, but resilient, responsible, and capable of creating lasting value for all stakeholders.
-
-BHT's vision extends beyond addressing immediate challenges. It seeks to support the development of stronger institutions, healthier stakeholder relationships, and environments where sustainable growth can flourish. Through its initiatives, partnerships, and evolving solutions, BHT aims to contribute to a culture that values preparedness, stewardship, collaboration, and long-term thinking.
-
-Blue Hummingbird Trust is envisioned as a trusted catalyst for organizational resilience and stakeholder empowerment — committed to expanding reach, deepening partnerships, and continuously refining approaches to meet the changing needs of the organizations and communities it serves.
-
-Our measure of success is not only the value we create today, but the enduring impact we help make possible for future generations.
-
----
-12. CONTACT DETAILS
-• General Inquiries: info@bluehummingbirdtrust.com
-• Project Proposals: projects@bluehummingbirdtrust.com
-• Strategic Partnerships: partnerships@bluehummingbirdtrust.com
-• WhatsApp: Available via the chat widget on this website
-
-=== END OF COMPANY PROFILE ===
-
-INSTRUCTIONS FOR RESPONDING:
-- Answer only from the company profile above. Never invent details not stated there.
-- Be warm, clear, and professional. Write in plain conversational English.
-- Keep answers concise (under 150 words) unless the question genuinely needs more depth.
-- When a user asks about contacting BHT, provide the relevant email address and mention WhatsApp is available via the chat widget.
-- If a question falls outside the company profile, say: "That's a great question, but it falls outside what I can answer here. Please reach out directly at info@bluehummingbirdtrust.com or via WhatsApp — the team would be happy to help."
-- Do not discuss competitors, make pricing claims, or speculate beyond the profile.`;
+  // Score each KB entry by counting keyword matches in the user's message; return the best match.
+  function findAnswer(userText) {
+    const text = userText.toLowerCase();
+    let best = null;
+    let bestScore = 0;
+    for (const entry of KB) {
+      let score = 0;
+      for (const kw of entry.keywords) {
+        if (text.includes(kw)) score += kw.split(' ').length; // multi-word keywords score higher
+      }
+      if (score > bestScore) {
+        bestScore = score;
+        best = entry;
+      }
+    }
+    return best ? best.answer : FALLBACK_ANSWER;
+  }
 
   function toggleChat() {
     isOpen = !isOpen;
@@ -1383,7 +1423,7 @@ INSTRUCTIONS FOR RESPONDING:
     if (el) el.remove();
   }
 
-  async function sendMessage(userText) {
+  function sendMessage(userText) {
     if (!userText.trim()) return;
     quickReplies.style.display = 'none';
     addUserMessage(userText);
@@ -1393,31 +1433,15 @@ INSTRUCTIONS FOR RESPONDING:
     chatHistory.push({ role: 'user', content: userText });
     addTypingIndicator();
 
-    try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 1000,
-          system: SYSTEM_PROMPT,
-          messages: chatHistory
-        })
-      });
-
-      const data = await response.json();
+    // Rule-based lookup — runs entirely client-side, no API call.
+    // Small delay mimics a natural reply pace; remove if instant replies are preferred.
+    const thinkTime = 450 + Math.random() * 400;
+    setTimeout(() => {
       removeTypingIndicator();
-
-      const reply = data.content && data.content[0] && data.content[0].text
-        ? data.content[0].text
-        : "I'm having trouble connecting right now. Please email us at info@bluehummingbirdtrust.com or reach out on WhatsApp.";
-
+      const reply = findAnswer(userText);
       chatHistory.push({ role: 'assistant', content: reply });
       addBotMessage(reply);
-    } catch (err) {
-      removeTypingIndicator();
-      addBotMessage("I'm having trouble connecting right now. Please email us at <a href='mailto:info@bluehummingbirdtrust.com'>info@bluehummingbirdtrust.com</a> or chat with us on WhatsApp.");
-    }
+    }, thinkTime);
   }
 
   function sendQuick(text) {
@@ -1430,6 +1454,101 @@ INSTRUCTIONS FOR RESPONDING:
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(chatInput.value); }
   });
   chatInput.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+  });
+
+  // ── DEDICATED CHATBOT PAGE PANEL ──
+  // Same rule-based engine (findAnswer) as the floating widget, rendered into its own panel.
+  const pageChatMessages = document.getElementById('pageChatMessages');
+  const pageChatInput = document.getElementById('pageChatInput');
+  const pageChatSend = document.getElementById('pageChatSend');
+  let pageGreeted = false;
+
+  function addPageBotMessage(text) {
+    const msg = document.createElement('div');
+    msg.className = 'chat-msg bot';
+    msg.innerHTML = `
+      <div class="chat-msg-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="chat-bubble">${text}</div>`;
+    pageChatMessages.appendChild(msg);
+    pageChatMessages.scrollTop = pageChatMessages.scrollHeight;
+  }
+
+  function addPageUserMessage(text) {
+    const msg = document.createElement('div');
+    msg.className = 'chat-msg user';
+    msg.innerHTML = `
+      <div class="chat-msg-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div class="chat-bubble">${text}</div>`;
+    pageChatMessages.appendChild(msg);
+    pageChatMessages.scrollTop = pageChatMessages.scrollHeight;
+  }
+
+  function addPageTypingIndicator() {
+    const typing = document.createElement('div');
+    typing.className = 'chat-msg bot';
+    typing.id = 'pageTypingIndicator';
+    typing.innerHTML = `
+      <div class="chat-msg-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="chat-bubble chat-typing"><span></span><span></span><span></span></div>`;
+    pageChatMessages.appendChild(typing);
+    pageChatMessages.scrollTop = pageChatMessages.scrollHeight;
+  }
+
+  function removePageTypingIndicator() {
+    const el = document.getElementById('pageTypingIndicator');
+    if (el) el.remove();
+  }
+
+  function sendPageMessage(userText) {
+    if (!userText.trim()) return;
+    addPageUserMessage(userText);
+    pageChatInput.value = '';
+    pageChatInput.style.height = 'auto';
+    addPageTypingIndicator();
+
+    const thinkTime = 450 + Math.random() * 400;
+    setTimeout(() => {
+      removePageTypingIndicator();
+      addPageBotMessage(findAnswer(userText));
+    }, thinkTime);
+  }
+
+  function sendPageQuick(text) {
+    if (!pageGreeted) greetPagePanel();
+    sendPageMessage(text);
+  }
+
+  function greetPagePanel() {
+    if (pageGreeted) return;
+    pageGreeted = true;
+    addPageBotMessage("Hello! 👋 I'm the BHT Assistant. Ask me anything about Blue Hummingbird Trust's services, charter, framework, or how to get in touch.");
+  }
+
+  // Greet as soon as the chatbot section scrolls into view.
+  const pageChatObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        greetPagePanel();
+        pageChatObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  const chatbotSection = document.getElementById('chatbot');
+  if (chatbotSection) pageChatObserver.observe(chatbotSection);
+
+  pageChatSend.addEventListener('click', () => sendPageMessage(pageChatInput.value));
+  pageChatInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendPageMessage(pageChatInput.value); }
+  });
+  pageChatInput.addEventListener('input', function() {
     this.style.height = 'auto';
     this.style.height = Math.min(this.scrollHeight, 100) + 'px';
   });
