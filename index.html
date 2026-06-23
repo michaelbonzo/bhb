@@ -667,15 +667,33 @@
     .services-grid { grid-template-columns: 1fr; }
     .service-card { padding: 36px 28px; }
     .framework-inner { grid-template-columns: 1fr; }
-    .framework-image { display: none; }
+    /* Show framework image on mobile, stacked above the text */
+    .framework-image { display: block; }
+    .framework-image img { height: 260px; width: 100%; border-radius: 4px; object-fit: cover; }
     .values-grid { grid-template-columns: 1fr 1fr; }
     .charter-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .partners-content { grid-template-columns: 1fr; gap: 32px; }
-    .impact-top { grid-template-columns: 1fr; gap: 40px; }
-    .impact-image { display: none; }
+    .impact-top { grid-template-columns: 1fr; gap: 32px; }
+    /* Show impact image on mobile, full-width above the text */
+    .impact-image { display: block; }
+    .impact-image img { height: 260px; width: 100%; border-radius: 4px; object-fit: cover; }
     .impact-metrics { grid-template-columns: 1fr 1fr; }
     .contact-top { grid-template-columns: 1fr; gap: 40px; }
-    .hero-image { display: none; }
+    /* Show hero image on mobile as a full-width block below the hero content */
+    .hero-image {
+      display: block;
+      position: relative;
+      width: 100%;
+      right: auto; top: auto; bottom: auto;
+      height: 280px;
+      margin-top: 40px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .hero-image img { opacity: 0.7; }
+    .hero-image::after { background: none; }
+    .hero { flex-direction: column; align-items: flex-start; padding-bottom: 48px; }
+    .hero-content { max-width: 100%; }
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
     .footer-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
@@ -684,11 +702,28 @@
   @media (max-width: 600px) {
     section { padding: 56px 4%; }
     nav { padding: 0 4%; height: 64px; }
-    .hero { padding: 100px 4% 64px; }
+    .hero { padding: 100px 4% 48px; flex-direction: column; }
     .hero h1 { font-size: clamp(28px, 8vw, 42px); }
     .hero-stats { gap: 24px; }
     .hero-actions { flex-direction: column; }
     .hero-actions .btn-primary, .hero-actions .btn-outline { width: 100%; justify-content: center; }
+    /* Hero image: full-width strip below hero content on small screens */
+    .hero-image {
+      position: relative;
+      width: 100%; height: 220px;
+      right: auto; top: auto; bottom: auto;
+      border-radius: 4px; overflow: hidden;
+      margin-top: 32px;
+    }
+    .hero-image img { opacity: 0.75; }
+    .hero-image::after { background: none; }
+    .hero-content { max-width: 100%; }
+    /* Framework image */
+    .framework-image { display: block; }
+    .framework-image img { height: 220px; }
+    /* Impact image */
+    .impact-image { display: block; }
+    .impact-image img { height: 220px; }
     .problems-grid { grid-template-columns: 1fr; }
     .values-grid { grid-template-columns: 1fr; }
     .charter-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -960,7 +995,7 @@
 <section class="framework" id="framework">
   <div class="framework-inner">
     <div class="framework-image">
-      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80" alt="Professionals in strategic discussion">
+      <img src="4.jpeg" alt="Professionals in strategic discussion">
     </div>
     <div>
       <span class="section-tag">Our Approach</span>
@@ -1041,7 +1076,7 @@
 <section class="partners" id="partners">
   <div class="partners-content">
     <div>
-      <img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?w=700&q=80" alt="Team collaboration in a boardroom" style="display:block; width:100%; border-radius:4px; object-fit:cover; height:360px; filter:brightness(0.7) saturate(0.7);">
+      <img src="5.jpg" style="display:block; width:100%; border-radius:4px; object-fit:cover; height:360px; filter:brightness(0.7) saturate(0.7);">
     </div>
     <div class="partners-body">
       <span class="section-tag">Strategic Partners</span>
@@ -1077,7 +1112,7 @@
         </div>
       </div>
       <div class="impact-image">
-        <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=900&q=80" alt="Corporate building representing institutional strength">
+        <img src="6.jpg" alt="Corporate building representing institutional strength">
       </div>
     </div>
     <div class="impact-metrics">
@@ -1281,19 +1316,43 @@
   });
 
   // ── SCROLL ANIMATIONS ──
-  const observer = new IntersectionObserver(entries => {
+  // 1. Animate every <section> as a whole (fade + rise, 1.5 s)
+  const sectionObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.style.opacity = '1';
         entry.target.style.transform = 'translateY(0)';
+        sectionObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('section').forEach(sec => {
+    sec.style.opacity = '0';
+    sec.style.transform = 'translateY(40px)';
+    sec.style.transition = 'opacity 1.5s ease, transform 1.5s ease';
+    sectionObserver.observe(sec);
+  });
+
+  // 2. Animate cards inside each section with a staggered delay (also 1.5 s)
+  const cardObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        cardObserver.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
-  document.querySelectorAll('.problem-card, .service-card, .value-card, .mission-card, .charter-item, .fw-item, .metric').forEach(el => {
+
+  document.querySelectorAll(
+    '.problem-card, .service-card, .value-card, .mission-card, .charter-item, .fw-item, .metric'
+  ).forEach((el, i) => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
-    observer.observe(el);
+    el.style.transform = 'translateY(28px)';
+    const delay = Math.min(i * 0.08, 0.4);
+    el.style.transition = `opacity 1.5s ease ${delay}s, transform 1.5s ease ${delay}s`;
+    cardObserver.observe(el);
   });
 
   // ── CONTACT FORM ──
