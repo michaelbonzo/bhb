@@ -249,7 +249,8 @@
   }
 
   /* ── ABOUT ── */
-  .about { background: var(--navy-mid); }
+  .about { background: #e7e3d7f8; }
+  .about span.section-tag { color: var(--blue-accent); }
   .about-inner {
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 80px; align-items: center;
@@ -268,11 +269,11 @@
   }
   .about-badge-num { font-family: 'Gotham', 'Montserrat', 'Inter', sans-serif; font-size: 34px; font-weight: 700; }
   .about-badge-label { font-size: 11px; color: rgba(255,255,255,0.7); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
-  .about-text h2 { margin-bottom: 20px; }
-  .about-text p { color: var(--text-light); margin-bottom: 20px; }
+  .about-text h2 { margin-bottom: 20px; color: #000;}
+  .about-text p { color: var(--gold); margin-bottom: 20px; }
   .about-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 32px 0; }
-  .pillar { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; color: var(--text-light); }
-  .pillar-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+  .pillar { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; color: var(--gold); }
+  .pillar-dot { width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0; }
 
   /* ── MISSION ── */
   .mission-grid {
@@ -303,7 +304,11 @@
   .problem-card p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
 
   /* ── SERVICES ── */
-  .services-header { max-width: 680px; margin: 0 auto 60px; }
+
+  .services { background: #e7e3d7f8; }
+  .services-header .section-tag { color: var(--blue-accent); }
+  .services-header { max-width: 680px; margin: 0 auto 60px; color: #000;}
+  .services-header .section-lead { color: var(--gold);}  
   .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1200px; margin: 0 auto; }
   .service-card {
     background: var(--navy-mid); border: 1px solid var(--border);
@@ -382,14 +387,16 @@
   }
 
   /* ── IMPACT ── */
-  .impact { padding: 96px 5%; }
+  .impact { padding: 96px 5%; background: #e7e3d7f8}
+  .impact .section-tag { color: var(--blue-accent); }
   .impact-inner { max-width: 1200px; margin: 0 auto; }
   .impact-top { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 72px; }
+  .impact-top h2 { margin-bottom: 20px; color: #000;}
   .impact-image img {
     width: 100%; border-radius: 4px;
     object-fit: cover; height: 440px; filter: brightness(0.75) saturate(0.7);
   }
-  .impact-text p { color: var(--text-light); margin-bottom: 20px; }
+  .impact-text p { color: var(--gold); margin-bottom: 20px; }
   .impact-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   .metric {
     background: var(--navy-mid); border: 1px solid var(--border);
@@ -782,7 +789,7 @@
 <section class="hero" id="home">
   <div class="hero-bg"></div>
   <div class="hero-image">
-    <img src="p0.JPG">
+    <img src="2.jpeg">
   </div>
   <div class="hero-content">
     <div class="hero-eyebrow">Building Enduring Institutions</div>
@@ -816,7 +823,7 @@
 <section class="about" id="about">
   <div class="about-inner">
     <div class="about-image-wrap">
-      <img src="p3.JPG">
+      <img src="3.jpeg">
       <div class="about-badge">
         <div class="about-badge-num">EST. 2019</div>
         <div class="about-badge-label">Strategic Advisory</div>
@@ -943,7 +950,7 @@
 </section>
 
 <!-- SERVICES -->
-<section style="padding: 96px 5%; background: var(--navy);" id="services">
+<section style="padding: 96px 5%; background: #e7e3d7f8;" id="services">
   <div class="services-header">
     <span class="section-tag">What We Do</span>
     <h2 class="section-title">Our Core Services</h2>
@@ -995,7 +1002,7 @@
 <section class="framework" id="framework">
   <div class="framework-inner">
     <div class="framework-image">
-      <img src="p4.JPG" alt="Professionals in strategic discussion">
+      <img src="4.jpeg" alt="Professionals in strategic discussion">
     </div>
     <div>
       <span class="section-tag">Our Approach</span>
@@ -1076,7 +1083,7 @@
 <section class="partners" id="partners">
   <div class="partners-content">
     <div>
-      <img src="p5.JPG" style="display:block; width:100%; border-radius:4px; object-fit:cover; height:360px; filter:brightness(0.7) saturate(0.7);">
+      <img src="5.jpg" style="display:block; width:100%; border-radius:4px; object-fit:cover; height:360px; filter:brightness(0.7) saturate(0.7);">
     </div>
     <div class="partners-body">
       <span class="section-tag">Strategic Partners</span>
@@ -1108,11 +1115,11 @@
           <p>Blue Hummingbird Trust aspires to contribute to a future where organizations are not only successful, but resilient, responsible, and capable of creating lasting value for all stakeholders.</p>
           <p>Our vision extends beyond addressing immediate challenges. We seek to support the development of stronger institutions, healthier stakeholder relationships, and environments where sustainable growth can flourish.</p>
           <p>As we look to the future, we envision Blue Hummingbird Trust serving as a trusted catalyst for organizational resilience and stakeholder empowerment — expanding reach, deepening partnerships, and continuously refining approaches to meet changing needs.</p>
-          <p style="font-style:italic; color:var(--gold-light); margin-top:28px; border-left:2px solid var(--gold); padding-left:20px;">Our measure of success is not only the value we create today, but the enduring impact we help make possible for future generations.</p>
+          <p style="font-style:italic; color:var(--blue-accent); margin-top:28px; border-left:2px solid var(--blue); padding-left:20px;">Our measure of success is not only the value we create today, but the enduring impact we help make possible for future generations.</p>
         </div>
       </div>
       <div class="impact-image">
-        <img src="p8.JPG" alt="Corporate building representing institutional strength">
+        <img src="6.jpg" alt="Corporate building representing institutional strength">
       </div>
     </div>
     <div class="impact-metrics">
