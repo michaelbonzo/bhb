@@ -431,6 +431,7 @@
   .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--text-muted); }
   .contact-form textarea { resize: none; height: 120px; }
   .contact-form select { color: var(--text-muted); }
+  .contact-form .field-invalid { border-color: #e05252 !important; }
   .form-submit {
     background: var(--blue-accent); color: var(--white);
     border: none; border-radius: 4px; padding: 14px 30px;
@@ -1213,19 +1214,20 @@
       <div>
         <div class="contact-form">
           <div class="form-row">
-            <input type="text" placeholder="First name">
-            <input type="text" placeholder="Last name">
+            <input type="text" id="contactFirstName" placeholder="First name">
+            <input type="text" id="contactLastName" placeholder="Last name">
           </div>
-          <input type="email" placeholder="Email address">
-          <input type="text" placeholder="Organization">
-          <select>
+          <input type="email" id="contactEmail" placeholder="Email address">
+          <input type="text" id="contactOrg" placeholder="Organization">
+          <select id="contactInquiryType">
             <option value="" disabled selected>Select inquiry type</option>
             <option>General Inquiry</option>
             <option>Project Proposal</option>
             <option>Strategic Partnership</option>
             <option>Advisory Services</option>
           </select>
-          <textarea placeholder="Tell us about your organization and how we can help..."></textarea>
+          <textarea id="contactMessage" placeholder="Tell us about your organization and how we can help..."></textarea>
+          <div id="formMessage" style="display:none; font-size:14px; margin-top:-4px;"></div>
           <button class="form-submit" id="formSubmit">Send Message</button>
         </div>
       </div>
@@ -1365,9 +1367,71 @@
 
   // ── CONTACT FORM ──
   document.getElementById('formSubmit').addEventListener('click', function() {
-    this.textContent = 'Message Sent ✓';
-    this.style.background = '#0f6e56';
-    setTimeout(() => { this.textContent = 'Send Message'; this.style.background = ''; }, 3000);
+    const btn = this;
+    const msgEl = document.getElementById('formMessage');
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const fields = [
+      { el: document.getElementById('contactFirstName'), label: 'First name' },
+      { el: document.getElementById('contactLastName'),  label: 'Last name' },
+      { el: document.getElementById('contactEmail'),     label: 'Email address' },
+      { el: document.getElementById('contactOrg'),       label: 'Organization' },
+      { el: document.getElementById('contactInquiryType'), label: 'Inquiry type' },
+      { el: document.getElementById('contactMessage'),   label: 'Message' }
+    ];
+
+    function showFormMessage(text, isError) {
+      msgEl.textContent = text;
+      msgEl.style.display = 'block';
+      msgEl.style.color = isError ? '#e05252' : '#0f6e56';
+    }
+
+    // Clear previous invalid-field highlighting
+    fields.forEach(f => f.el.classList.remove('field-invalid'));
+
+    // Check for any empty/unfilled fields first
+    const missing = fields.filter(f => !f.el.value.trim());
+    if (missing.length) {
+      missing.forEach(f => f.el.classList.add('field-invalid'));
+      showFormMessage(`Please fill in the following field${missing.length > 1 ? 's' : ''}: ${missing.map(f => f.label).join(', ')}.`, true);
+      missing[0].el.focus();
+      return;
+    }
+
+    // Email must exist and be valid before anything is sent
+    const emailInput = document.getElementById('contactEmail');
+    const emailValue = emailInput.value.trim();
+    if (!emailPattern.test(emailValue)) {
+      emailInput.classList.add('field-invalid');
+      showFormMessage('Incorrect email or email does not exist.', true);
+      emailInput.focus();
+      return;
+    }
+
+    const firstName = document.getElementById('contactFirstName').value.trim();
+    const lastName = document.getElementById('contactLastName').value.trim();
+    const org = document.getElementById('contactOrg').value.trim();
+    const inquiryType = document.getElementById('contactInquiryType').value;
+    const message = document.getElementById('contactMessage').value.trim();
+
+    const subject = `New ${inquiryType || 'Inquiry'} from ${firstName} ${lastName}`.trim();
+    const bodyLines = [
+      `Name: ${firstName} ${lastName}`.trim(),
+      `Email: ${emailValue}`,
+      `Organization: ${org}`,
+      `Inquiry Type: ${inquiryType}`,
+      '',
+      message
+    ];
+
+    const mailtoLink = `mailto:info@bluehummingbirdtrust.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+
+    window.location.href = mailtoLink;
+
+    showFormMessage('Message ready to send — check your email app.', false);
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#0f6e56';
+    setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; }, 3000);
   });
 
   // ── CHATBOT ──
